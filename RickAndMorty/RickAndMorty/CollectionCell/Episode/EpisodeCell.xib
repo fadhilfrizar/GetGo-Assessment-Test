@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="episodeCell" id="gTV-IL-0wX" customClass="EpisodeCell" customModule="RickAndMorty" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="369" height="116"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="369" height="116"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HY2-hu-vQQ">
+                        <rect key="frame" x="16" y="16" width="337" height="21"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ApH-Ev-kXz">
+                        <rect key="frame" x="16" y="53" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ez1-rS-Tx4">
+                        <rect key="frame" x="16" y="82" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whV-pG-S3H">
+                        <rect key="frame" x="191.33333333333331" y="59.333333333333343" width="136.33333333333331" height="40.666666666666657"/>
+                        <string key="text">Air Date:
+9 December 2013</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Ez1-rS-Tx4" firstAttribute="top" secondItem="ApH-Ev-kXz" secondAttribute="bottom" constant="8" id="2JE-3P-wp8"/>
+                <constraint firstItem="Ez1-rS-Tx4" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="3VP-NJ-Gg8"/>
+                <constraint firstItem="ApH-Ev-kXz" firstAttribute="top" secondItem="HY2-hu-vQQ" secondAttribute="bottom" constant="16" id="AJC-5a-Acq"/>
+                <constraint firstItem="whV-pG-S3H" firstAttribute="centerY" secondItem="ApH-Ev-kXz" secondAttribute="centerY" constant="16" id="Xee-hC-kP9"/>
+                <constraint firstItem="ApH-Ev-kXz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="Zwh-h0-pRO"/>
+                <constraint firstItem="whV-pG-S3H" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" constant="75" id="ba4-Qb-TLg"/>
+                <constraint firstAttribute="trailing" secondItem="HY2-hu-vQQ" secondAttribute="trailing" constant="16" id="d2b-bh-6ad"/>
+                <constraint firstItem="HY2-hu-vQQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="rcF-5N-6wd"/>
+                <constraint firstItem="HY2-hu-vQQ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="wli-d3-M9y"/>
+            </constraints>
+            <size key="customSize" width="369" height="96"/>
+            <connections>
+                <outlet property="airDateLabel" destination="whV-pG-S3H" id="hKo-6O-fTb"/>
+                <outlet property="episodeLabel" destination="Ez1-rS-Tx4" id="ABW-VJ-R2c"/>
+                <outlet property="nameLabel" destination="HY2-hu-vQQ" id="Vgb-r5-CSW"/>
+                <outlet property="seasonLabel" destination="ApH-Ev-kXz" id="ifN-UR-5YF"/>
+            </connections>
+            <point key="canvasLocation" x="263.35877862595419" y="35.91549295774648"/>
+        </collectionViewCell>
+    </objects>
+</document>

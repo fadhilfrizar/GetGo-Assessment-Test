@@ -9,24 +9,8 @@ import UIKit
 
 private let reuseIdentifier = "episodeCell"
 
-class EpisodeListController: UICollectionViewController, UISearchResultsUpdating, UICollectionViewDelegateFlowLayout {
+class EpisodeListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        
-        if searchText == "" {
-            searchActive = false
-        } else {
-            filteredEpisodes = episodes.filter{ (episodes) -> Bool in
-                return episodes.name.range(of: searchText, options: [ .caseInsensitive ]) != nil
-            }
-            searchActive = true
-        }
-        
-        self.collectionView.reloadData()
-    }
-    
-
     var viewModel: EpisodeViewModel?
     
     var episodes: [EpisodeResult] = []
@@ -37,8 +21,10 @@ class EpisodeListController: UICollectionViewController, UISearchResultsUpdating
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         collectionView.register(UINib(nibName: "EpisodeCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.refreshControl = refreshControl
+        
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         viewModel?.onEpisodeLoad = { [weak self] episode in
             self?.episodes = episode
@@ -98,5 +84,22 @@ class EpisodeListController: UICollectionViewController, UISearchResultsUpdating
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width - 16, height: 116)
+    }
+}
+
+extension EpisodeListController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        
+        if searchText == "" {
+            searchActive = false
+        } else {
+            filteredEpisodes = episodes.filter{ (episodes) -> Bool in
+                return episodes.name.range(of: searchText, options: [ .caseInsensitive ]) != nil
+            }
+            searchActive = true
+        }
+        
+        self.collectionView.reloadData()
     }
 }

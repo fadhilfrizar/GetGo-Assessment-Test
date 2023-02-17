@@ -9,24 +9,8 @@ import UIKit
 
 private let reuseIdentifier = "locationCell"
 
-class LocationListController: UICollectionViewController, UISearchResultsUpdating, UICollectionViewDelegateFlowLayout {
+class LocationListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        
-        if searchText == "" {
-            searchActive = false
-        } else {
-            filteredLocations = locations.filter{ (locations) -> Bool in
-                return locations.name.range(of: searchText, options: [ .caseInsensitive ]) != nil
-            }
-            searchActive = true
-        }
-        
-        self.collectionView.reloadData()
-    }
-    
-
     var viewModel: LocationViewModel?
     
     var locations: [LocationResult] = []
@@ -37,8 +21,10 @@ class LocationListController: UICollectionViewController, UISearchResultsUpdatin
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         collectionView.register(UINib(nibName: "LocationCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.refreshControl = refreshControl
+        
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         viewModel?.onLocationLoad = { [weak self] location in
             self?.locations = location
@@ -109,36 +95,23 @@ class LocationListController: UICollectionViewController, UISearchResultsUpdatin
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width - 32, height: 80)
     }
+}
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+extension LocationListController: UISearchResultsUpdating {
     
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        
+        if searchText == "" {
+            searchActive = false
+        } else {
+            filteredLocations = locations.filter{ (locations) -> Bool in
+                return locations.name.range(of: searchText, options: [ .caseInsensitive ]) != nil
+            }
+            searchActive = true
+        }
+        
+        self.collectionView.reloadData()
     }
-    */
-
+    
 }

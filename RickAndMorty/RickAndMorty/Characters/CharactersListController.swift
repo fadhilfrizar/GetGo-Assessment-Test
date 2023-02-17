@@ -9,27 +9,15 @@ import UIKit
 
 private let reuseIdentifier = "characterCell"
 
-class CharactersListController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        
-        if searchText == "" {
-            searchActive = false
-        } else {
-            filteredCharacter = characters.filter{ (characters) -> Bool in
-                return characters.name.range(of: searchText, options: [ .caseInsensitive ]) != nil
-            }
-            searchActive = true
-        }
-        
-        self.collectionView.reloadData()
-    }
-    
-    
+class CharactersListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+  
     var viewModel: CharactersViewModel?
     
-    var characters: [CharacterResult] = []
+    var characters: [CharacterResult] = [] {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
     var filteredCharacter: [CharacterResult] = []
     var searchActive = false
     
@@ -37,12 +25,13 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "CharacterCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         viewModel?.onCharactersLoad = { [weak self] characters in
             self?.characters = characters
             self?.filteredCharacter = characters
-            self?.collectionView.reloadData()
+
         }
         
         viewModel?.onCharactersError = { [weak self] error in
@@ -58,6 +47,8 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
                 self?.refreshControl.endRefreshing()
             }
         }
+        
+        self.navigationItem.title = "Characters"
         
     }
     
@@ -101,106 +92,32 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
         
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width / 2 - 16, height: 250)
         
     }
     
-    // MARK: UICollectionViewDelegate
-    
-    /*
-     // Uncomment this method to specify if the specified item should be highlighted during tracking
-     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment this method to specify if the specified item should be selected
-     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-     
-     }
-     */
-    
 }
 
-
-extension UIViewController {
-    func handle(_ error: Error, completion: @escaping () -> ()) {
-        let alert = UIAlertController(
-            title: "An error occured",
-            message: error.localizedDescription,
-            preferredStyle: .alert
-        )
+extension CharactersListController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
         
-        alert.addAction(UIAlertAction(
-            title: "Dismiss",
-            style: .default
-        ))
-        
-        alert.addAction(UIAlertAction(
-            title: "Retry",
-            style: .default,
-            handler: { _ in
-                completion()
+        if searchText == "" {
+            searchActive = false
+        } else {
+            filteredCharacter = characters.filter{ (characters) -> Bool in
+                return characters.name.range(of: searchText, options: [ .caseInsensitive ]) != nil
             }
-        ))
-        
-        present(alert, animated: true)
-    }
-}
-
-
-let imageCache = NSCache<AnyObject, AnyObject>()
-
-extension UIImageView {
-    
-    func loadImageUsingCacheWithUrlString(_ urlString: String) {
-        
-        self.image = nil
-        
-        //check cache for image first
-        if let cachedImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
-            self.image = cachedImage
-            return
+            searchActive = true
         }
         
-        //otherwise fire off a new download
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-            
-            //download hit an error so lets return out
-            if error != nil {
-                print(error ?? "")
-                return
-            }
-            
-            DispatchQueue.main.async(execute: {
-                
-                if let downloadedImage = UIImage(data: data!) {
-                    imageCache.setObject(downloadedImage, forKey: urlString as AnyObject)
-                    
-                    self.image = downloadedImage
-                }
-            })
-            
-        }).resume()
+        self.collectionView.reloadData()
     }
     
 }

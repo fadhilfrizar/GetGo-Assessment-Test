@@ -59,9 +59,10 @@ class MainTabBarController: UITabBarController {
     private func makeCharacterList() -> CharactersListController {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
+        layout.collectionView?.alwaysBounceVertical = true
         
         let vc = CharactersListController(collectionViewLayout: layout)
-        vc.navigationItem.title = "Characters"
+        vc.title = "Characters"
         vc.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: vc, action: #selector(vc.filterCharacter))
         
         let searchController = UISearchController(searchResultsController: nil)

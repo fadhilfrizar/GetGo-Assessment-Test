@@ -16,7 +16,18 @@ enum CharacterMapper {
         }
         
         var character : [CharacterResult] {
-            data.map { CharacterResult(id: $0.id, name: $0.name, status: $0.status, species: $0.species, type: $0.type, gender: $0.gender, origin: $0.origin, location: $0.location, image: $0.image, episode: $0.episode, url: $0.url, created: $0.created) }
+            data.map { CharacterResult(id: $0.id,
+                                       name: $0.name,
+                                       status: $0.status,
+                                       species: $0.species,
+                                       type: $0.type,
+                                       gender: $0.gender,
+                                       origin: $0.origin,
+                                       location: $0.location,
+                                       image: $0.image,
+                                       episode: $0.episode,
+                                       url: $0.url,
+                                       created: $0.created) }
         }
     }
     

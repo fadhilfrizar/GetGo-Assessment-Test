@@ -7,12 +7,7 @@
 
 import Foundation
 
-struct CharacterModel: Codable {
-    let info: InfoModel
-    let result: [CharacterResult]
-}
-
-struct CharacterResult: Codable {
+struct CharacterResult {
     let id: Int
     let name: String
     let status: String
@@ -27,9 +22,16 @@ struct CharacterResult: Codable {
     let created: String
     
 }
+extension CharacterResult: Equatable {
+    static func == (lhs: CharacterResult, rhs: CharacterResult) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
 
 struct CharacterResultOriginAndLocation: Codable {
     let name: String
     let url: String
     
 }
+

@@ -46,6 +46,7 @@ class LocationListController: UICollectionViewController, UICollectionViewDelega
             }
         }
         
+        self.navigationItem.title = "Location"
     }
     
     override func viewWillAppear(_ animated: Bool) {

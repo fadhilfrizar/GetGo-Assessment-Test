@@ -48,7 +48,7 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
             }
         }
         
-        self.navigationItem.title = "Characters"
+        self.navigationItem.title = "Character"
         
     }
     

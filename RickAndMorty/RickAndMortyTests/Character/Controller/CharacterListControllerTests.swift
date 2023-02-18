@@ -10,7 +10,7 @@ import XCTest
 import UIKit
 @testable import RickAndMorty
 
-class CharacterViewControllerTests: XCTestCase {
+class CharacterListControllerTests: XCTestCase {
     
     func test_canInit() throws {
         _ = try makeSUT()
@@ -21,7 +21,7 @@ class CharacterViewControllerTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         
-        XCTAssertEqual(sut.navigationItem.title, "Characters")
+        XCTAssertEqual(sut.navigationItem.title, "Character")
     }
     
     

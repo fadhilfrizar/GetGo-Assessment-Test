@@ -62,7 +62,7 @@ class MainTabBarController: UITabBarController {
         layout.collectionView?.alwaysBounceVertical = true
         
         let vc = CharactersListController(collectionViewLayout: layout)
-        vc.title = "Characters"
+        vc.title = "Character"
         vc.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: vc, action: #selector(vc.filterCharacter))
         
         let searchController = UISearchController(searchResultsController: nil)
@@ -79,7 +79,7 @@ class MainTabBarController: UITabBarController {
         layout.sectionInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
         
         let vc = LocationListController(collectionViewLayout: layout)
-        vc.navigationItem.title = "Location"
+        vc.title = "Location"
         
         let searchController = UISearchController(searchResultsController: nil)
         vc.navigationItem.searchController = searchController

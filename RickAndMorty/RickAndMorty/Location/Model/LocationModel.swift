@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct LocationModel: Codable {
-    let info: InfoModel
-    let locationResult: [LocationResult]
-}
+//struct LocationModel: Codable {
+//    let info: InfoModel
+//    let locationResult: [LocationResult]
+//}
 
-struct LocationResult: Codable {
+struct LocationResult {
     
     let id: Int
     let name: String
@@ -22,3 +22,5 @@ struct LocationResult: Codable {
     let url: String
     let created: String
 }
+
+extension LocationResult: Equatable {}

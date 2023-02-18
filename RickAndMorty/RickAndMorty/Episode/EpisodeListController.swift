@@ -46,6 +46,7 @@ class EpisodeListController: UICollectionViewController, UICollectionViewDelegat
             }
         }
         
+        self.navigationItem.title = "Episode"
     }
     
     override func viewWillAppear(_ animated: Bool) {

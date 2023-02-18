@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct EpisodeModel: Codable {
-    var info: InfoModel
-    var result: [EpisodeResult]
-}
+//struct EpisodeModel: Codable {
+//    var info: InfoModel
+//    var result: [EpisodeResult]
+//}
 
-struct EpisodeResult: Codable {
+struct EpisodeResult {
     var id: Int
     var name: String
     var air_date: String
@@ -21,3 +21,5 @@ struct EpisodeResult: Codable {
     var url: String
     var created: String
 }
+
+extension EpisodeResult: Equatable {}

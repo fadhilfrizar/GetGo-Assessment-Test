@@ -9,19 +9,18 @@ import Foundation
 
 public enum CharacterEndpoint {
     
-    case get(_ : String)
+    case get(page: Int)
     
     public func url(baseURL: URL) -> URL {
         switch self {
-        case .get(_):
+        case let .get(page):
             var components = URLComponents()
             components.scheme = baseURL.scheme
             components.host = baseURL.host
             components.path = baseURL.path + "/character"
-//            components.queryItems = [
-//                URLQueryItem(name: "lang", value: "EN"),
-//                URLQueryItem(name: "categories", value: category)
-//            ].compactMap { $0 }
+            components.queryItems = [
+                URLQueryItem(name: "page", value: "\(page)")
+            ].compactMap { $0 }
             return components.url!
         }
     }

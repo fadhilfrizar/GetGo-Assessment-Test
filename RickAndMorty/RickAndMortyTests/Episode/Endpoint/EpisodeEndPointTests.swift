@@ -14,11 +14,11 @@ class EpisodeEndPointTests: XCTestCase {
     func test_episodes_endpointURL() {
         let baseURL = URL(string: "http://base-url.com")!
         
-        let received = CharacterEndpoint.get("").url(baseURL: baseURL)
+        let received = EpisodeEndpoint.get("").url(baseURL: baseURL)
         
         XCTAssertEqual(received.scheme, "http", "scheme")
         XCTAssertEqual(received.host, "base-url.com", "host")
-        XCTAssertEqual(received.path, "/character", "path")
+        XCTAssertEqual(received.path, "/episode", "path")
         
     }
 

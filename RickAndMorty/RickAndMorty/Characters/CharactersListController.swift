@@ -10,28 +10,49 @@ import UIKit
 private let reuseIdentifier = "characterCell"
 
 class CharactersListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-  
+    
     var viewModel: CharactersViewModel?
     
-    var characters: [CharacterResult] = [] {
-        didSet {
-            self.collectionView.reloadData()
-        }
-    }
+    var characters: [CharacterResult] = []
     var filteredCharacter: [CharacterResult] = []
     var searchActive = false
     
     var refreshControl = UIRefreshControl()
+    
+    private lazy var httpClient: HTTPClient = {
+        URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+    }()
+    private lazy var baseURL = URL(string: "https://rickandmortyapi.com/api")!
+    
+    var currentPage = 1
+    var isLoading = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "CharacterCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
+        self.navigationItem.title = "Character"
+        
+        
+    }
+    
+    func initViewModel(page: Int) {
+        viewModel = CharactersViewModel(service: MainQueueDispatchDecorator(decoratee: CharacterServiceAPI(url: CharacterEndpoint.get(page: page).url(baseURL: baseURL), client: httpClient)))
+        
+        viewModel?.fetchCharacters()
+        
         viewModel?.onCharactersLoad = { [weak self] characters in
-            self?.characters = characters
-            self?.filteredCharacter = characters
-
+            
+            for character in characters {
+                self?.characters.append(character)
+                self?.filteredCharacter.append(character)
+            }
+            
+            self?.collectionView.reloadData()
+            self?.isLoading = false
+            
         }
         
         viewModel?.onCharactersError = { [weak self] error in
@@ -47,14 +68,11 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
                 self?.refreshControl.endRefreshing()
             }
         }
-        
-        self.navigationItem.title = "Character"
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.fetchCharacters()
+        initViewModel(page: currentPage)
     }
     
     @objc private func refresh(_ sender: Any) {
@@ -93,7 +111,30 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailCharacterController(nibName: "DetailCharacterController", bundle: nil)
+        
+        if searchActive {
+            vc.characters = filteredCharacter[indexPath.row]
+        } else {
+            vc.characters = characters[indexPath.row]
+        }
+        
+        show(vc, sender: self)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let lastCharacterCount: Int = self.characters.count - 1
 
+        if indexPath.row == lastCharacterCount && currentPage <= 10 {
+            guard !isLoading else { return }
+            isLoading = true
+            currentPage += 1
+            initViewModel(page: currentPage)
+//            if let customTabBarController = self.tabBarController as? MainTabBarController {
+//                customTabBarController.pages = currentPage
+//            }
+
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

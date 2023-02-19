@@ -14,6 +14,8 @@ class MainTabBarController: UITabBarController {
     }()
     private lazy var baseURL = URL(string: "https://rickandmortyapi.com/api")!
     
+    var pages: Int = 1
+    
     convenience init() {
         self.init(nibName: nil, bundle: nil)
         self.setupViewController()
@@ -69,7 +71,7 @@ class MainTabBarController: UITabBarController {
         vc.navigationItem.searchController = searchController
         searchController.searchResultsUpdater = vc
         
-        vc.viewModel = CharactersViewModel(service: MainQueueDispatchDecorator(decoratee: CharacterServiceAPI(url: CharacterEndpoint.get("").url(baseURL: baseURL), client: httpClient)))
+//        vc.viewModel = CharactersViewModel(service: MainQueueDispatchDecorator(decoratee: CharacterServiceAPI(url: CharacterEndpoint.get(page: pages).url(baseURL: baseURL), client: httpClient)))
         
         return vc
     }
@@ -111,7 +113,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+
     }
     
     

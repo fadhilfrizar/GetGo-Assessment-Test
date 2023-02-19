@@ -66,16 +66,28 @@ class CharacterListControllerTests: XCTestCase {
     
     func test_viewDidLoad_rendersCharacter() throws {
         let sut = try makeSUT()
-        let service =  CharacterServiceSpy(result: [makeCharacters(id: 1, name: "Rick Sanchez", status: "", species: "Human", type: "", gender: "", origin: CharacterResultOriginAndLocation(name: "", url: ""), location: CharacterResultOriginAndLocation(name: "", url: ""), image: "https://urlImage.com", episode: [], url: "", created: "")])
+        let service =  CharacterServiceSpy(result: [makeCharacters(id: 21,
+                                                                   name: "Aqua Morty",
+                                                                   status: "unknown",
+                                                                   species: "Humanoid",
+                                                                   type: "Fish-Person",
+                                                                   gender: "Male",
+                                                                   origin: CharacterResultOriginAndLocation(name: "unknown", url: ""),
+                                                                   location: CharacterResultOriginAndLocation(name: "Citadel of Ricks",
+                                                                                                              url: "https://rickandmortyapi.com/api/location/3"),
+                                                                   image: "https://rickandmortyapi.com/api/character/avatar/21.jpeg",
+                                                                   episode: ["https://rickandmortyapi.com/api/episode/10", "https://rickandmortyapi.com/api/episode/22"],
+                                                                   url: "https://rickandmortyapi.com/api/character/21",
+                                                                   created: "2017-11-04T22:39:48.055Z")])
         sut.viewModel = CharactersViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
         
         XCTAssertEqual(sut.numberOfCharacters(), 1)
-        XCTAssertEqual(sut.name(atRow: 0), "Rick Sanchez")
-        XCTAssertEqual(sut.species(atRow: 0), "Human")
-//        XCTAssertEqual(sut.image(atRow: 0), "https://urlImage.com")
+        XCTAssertEqual(sut.name(atRow: 0), "Aqua Morty")
+        XCTAssertEqual(sut.species(atRow: 0), "Humanoid")
+        //        XCTAssertEqual(sut.image(atRow: 0), "https://urlImage.com")
         
     }
     
@@ -83,8 +95,8 @@ class CharacterListControllerTests: XCTestCase {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let vc = CharactersListController(collectionViewLayout: layout)
         
-        let sut = try XCTUnwrap(vc)
-        return sut
+//        let sut = try XCTUnwrap(vc)
+        return vc
     }
     
     func makeTestableSUT() throws -> TestableCharacterViewController {
@@ -104,11 +116,7 @@ extension CharactersListController {
     func numberOfCharacters() -> Int {
         collectionView.numberOfItems(inSection: characterSection)
     }
-
-//    func image(atRow row: Int) -> String? {
-//        characterCell(atRow: row)?.characterImageView.loadImageUsingCacheWithUrlString("") as? String
-//    }
-//
+    
     func name(atRow row: Int) -> String? {
         characterCell(atRow: row)?.characterNameLabel.text
     }

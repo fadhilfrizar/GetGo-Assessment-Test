@@ -14,11 +14,11 @@ class LocationEndPointTests: XCTestCase {
     func test_locations_endpointURL() {
         let baseURL = URL(string: "http://base-url.com")!
         
-        let received = CharacterEndpoint.get("").url(baseURL: baseURL)
+        let received = LocationEndpoint.get("").url(baseURL: baseURL)
         
         XCTAssertEqual(received.scheme, "http", "scheme")
         XCTAssertEqual(received.host, "base-url.com", "host")
-        XCTAssertEqual(received.path, "/character", "path")
+        XCTAssertEqual(received.path, "/location", "path")
         
     }
 

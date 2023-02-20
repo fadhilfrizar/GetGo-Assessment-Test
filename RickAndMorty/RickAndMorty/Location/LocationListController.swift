@@ -18,6 +18,9 @@ class LocationListController: UICollectionViewController, UICollectionViewDelega
     var searchActive = false
     
     var refreshControl = UIRefreshControl()
+
+    var currentPage = 1
+    var isLoading = false
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +29,20 @@ class LocationListController: UICollectionViewController, UICollectionViewDelega
         
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
-        viewModel?.onLocationLoad = { [weak self] location in
-            self?.locations = location
-            self?.filteredLocations = location
+        viewModel?.onLocationLoad = { [weak self] locations in
+            for location in locations {
+                self?.locations.append(location)
+                self?.filteredLocations.append(location)
+            }
+            
             self?.collectionView.reloadData()
+            self?.isLoading = false
         }
         
         viewModel?.onLocationError = { [weak self] error in
             self?.handle(error) {
-                self?.viewModel?.fetchLocations()
+                let parameters = ["page": self!.currentPage]
+                self?.viewModel?.fetchLocations(parameters: parameters)
             }
         }
         
@@ -49,26 +57,25 @@ class LocationListController: UICollectionViewController, UICollectionViewDelega
         self.navigationItem.title = "Location"
     }
     
+    private func fetchLocation(page: Int) {
+        let parameters = ["page": page]
+        viewModel?.fetchLocations(parameters: parameters)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.fetchLocations()
+        
+        self.locations.removeAll()
+        self.filteredLocations.removeAll()
+        
+        fetchLocation(page: currentPage)
     }
     
     @objc private func refresh(_ sender: Any) {
-        viewModel?.fetchLocations()
+        let parameters = ["page": currentPage]
+        viewModel?.fetchLocations(parameters: parameters)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         if searchActive {
@@ -91,6 +98,18 @@ class LocationListController: UICollectionViewController, UICollectionViewDelega
             cell.configure(vm)
         }
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let lastLocationCount: Int = self.locations.count - 1
+
+        if indexPath.row == lastLocationCount && currentPage < 7 {
+            guard !isLoading else { return }
+            isLoading = true
+            currentPage += 1
+            fetchLocation(page: currentPage)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

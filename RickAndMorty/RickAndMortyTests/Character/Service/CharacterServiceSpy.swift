@@ -21,7 +21,7 @@ class CharacterServiceSpy: CharacterService {
         self.result = .failure(result)
     }
     
-    func load(completion: @escaping (Result<[CharacterResult], Error>) -> Void) {
+    func load(parameters: [String : Any]?, completion: @escaping (Result<[CharacterResult], Error>) -> Void) {
         loadCharacterCount += 1
         completion(result)
     }

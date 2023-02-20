@@ -18,6 +18,9 @@ class EpisodeListController: UICollectionViewController, UICollectionViewDelegat
     var searchActive = false
     
     var refreshControl = UIRefreshControl()
+    
+    var currentPage = 1
+    var isLoading = false
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +29,20 @@ class EpisodeListController: UICollectionViewController, UICollectionViewDelegat
         
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
-        viewModel?.onEpisodeLoad = { [weak self] episode in
-            self?.episodes = episode
-            self?.filteredEpisodes = episode
+        viewModel?.onEpisodeLoad = { [weak self] episodes in
+            
+            for episode in episodes {
+                self?.episodes.append(episode)
+                self?.filteredEpisodes.append(episode)
+            }
+            self?.isLoading = false
             self?.collectionView.reloadData()
         }
         
         viewModel?.onEpisodeError = { [weak self] error in
             self?.handle(error) {
-                self?.viewModel?.fetchEpisode()
+                let parameters = ["page": self!.currentPage]
+                self?.viewModel?.fetchEpisode(parameters: parameters)
             }
         }
         
@@ -49,13 +57,22 @@ class EpisodeListController: UICollectionViewController, UICollectionViewDelegat
         self.navigationItem.title = "Episode"
     }
     
+    private func fetchEpisode(page: Int) {
+        let parameters = ["page": page]
+        viewModel?.fetchEpisode(parameters: parameters)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.fetchEpisode()
+        
+        self.episodes.removeAll()
+        self.filteredEpisodes.removeAll()
+        fetchEpisode(page: currentPage)
     }
     
     @objc private func refresh(_ sender: Any) {
-        viewModel?.fetchEpisode()
+        let parameters = ["page": currentPage]
+        viewModel?.fetchEpisode(parameters: parameters)
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -82,6 +99,19 @@ class EpisodeListController: UICollectionViewController, UICollectionViewDelegat
     
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let lastEpisodeCount: Int = self.episodes.count - 1
+
+        if indexPath.row == lastEpisodeCount && currentPage < 3 {
+            guard !isLoading else { return }
+            isLoading = true
+            currentPage += 1
+            fetchEpisode(page: currentPage)
+        }
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width - 16, height: 116)

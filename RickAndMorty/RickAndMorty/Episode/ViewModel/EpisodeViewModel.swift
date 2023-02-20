@@ -20,9 +20,9 @@ class EpisodeViewModel {
     var onEpisodeError: Observer<Error>?
     var onEpisodeLoading: Observer<Bool>?
     
-    func fetchEpisode(){
+    func fetchEpisode(parameters: [String: Any]?){
         onEpisodeLoading?(true)
-        service.load { [weak self] result in
+        service.load(parameters: parameters) { [weak self] result in
             switch result {
             case let .success(episode):
                 self?.onEpisodeLoad?(episode)

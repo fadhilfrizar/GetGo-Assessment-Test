@@ -19,11 +19,6 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
     
     var refreshControl = UIRefreshControl()
     
-    private lazy var httpClient: HTTPClient = {
-        URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
-    }()
-    private lazy var baseURL = URL(string: "https://rickandmortyapi.com/api")!
-    
     var currentPage = 1
     var isLoading = false
     
@@ -34,14 +29,6 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         self.navigationItem.title = "Character"
-        
-        
-    }
-    
-    func initViewModel(page: Int) {
-        viewModel = CharactersViewModel(service: MainQueueDispatchDecorator(decoratee: CharacterServiceAPI(url: CharacterEndpoint.get(page: page).url(baseURL: baseURL), client: httpClient)))
-        
-        viewModel?.fetchCharacters()
         
         viewModel?.onCharactersLoad = { [weak self] characters in
             
@@ -57,7 +44,8 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
         
         viewModel?.onCharactersError = { [weak self] error in
             self?.handle(error) {
-                self?.viewModel?.fetchCharacters()
+                let parameters = ["page": self!.currentPage]
+                self?.viewModel?.fetchCharacters(parameters: parameters)
             }
         }
         
@@ -68,15 +56,26 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
                 self?.refreshControl.endRefreshing()
             }
         }
+        
+    }
+    
+    func fetchCharacter(page: Int) {
+        let parameters = ["page": page]
+        viewModel?.fetchCharacters(parameters: parameters)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        initViewModel(page: currentPage)
+        
+        self.characters.removeAll()
+        self.filteredCharacter.removeAll()
+        
+        fetchCharacter(page: currentPage)
     }
     
     @objc private func refresh(_ sender: Any) {
-        viewModel?.fetchCharacters()
+        let parameters = ["page": currentPage]
+        viewModel?.fetchCharacters(parameters: parameters)
     }
     
     
@@ -129,11 +128,7 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
             guard !isLoading else { return }
             isLoading = true
             currentPage += 1
-            initViewModel(page: currentPage)
-//            if let customTabBarController = self.tabBarController as? MainTabBarController {
-//                customTabBarController.pages = currentPage
-//            }
-
+            fetchCharacter(page: currentPage)
         }
     }
     

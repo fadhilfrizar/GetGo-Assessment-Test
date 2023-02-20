@@ -10,7 +10,7 @@ import Foundation
 protocol LocationService {
     typealias Result = Swift.Result<[LocationResult], Error>
     
-    func load(completion: @escaping (Result) -> Void)
+    func load(parameters: [String: Any]?, completion: @escaping (Result) -> Void)
 }
 
 class LocationServiceAPI: LocationService {
@@ -28,8 +28,8 @@ class LocationServiceAPI: LocationService {
         self.client = client
     }
     
-    func load(completion: @escaping (LocationService.Result) -> Void) {
-        client.get(from: url) { [weak self] result in
+    func load(parameters: [String: Any]?, completion: @escaping (LocationService.Result) -> Void) {
+        client.get(from: url, parameters: parameters) { [weak self] result in
             guard self != nil else { return }
             switch result {
             case let .success((data, response)):

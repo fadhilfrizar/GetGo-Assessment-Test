@@ -11,6 +11,8 @@ import XCTest
 
 class LoadCharactersFromRemoteUseCaseTest: XCTestCase {
     
+    let parameters = ["page": 1]
+    
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
         
@@ -21,8 +23,8 @@ class LoadCharactersFromRemoteUseCaseTest: XCTestCase {
         let url = URL(string: "https://a-given-url.com")!
         let (sut, client) = makeSUT(url: url)
 
-        sut.load { _ in }
-        sut.load { _ in }
+        sut.load(parameters: parameters) { _ in }
+        sut.load(parameters: parameters) { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
@@ -78,7 +80,7 @@ extension LoadCharactersFromRemoteUseCaseTest {
     func expect(_ sut: CharacterService, toCompleteWith expectedResult: Result<[CharacterResult], CharacterServiceAPI.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
 
-        sut.load { receivedResult in
+        sut.load(parameters: parameters) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedItems), .success(expectedItems)) :
                 XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)

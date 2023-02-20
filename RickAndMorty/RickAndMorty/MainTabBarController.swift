@@ -71,7 +71,7 @@ class MainTabBarController: UITabBarController {
         vc.navigationItem.searchController = searchController
         searchController.searchResultsUpdater = vc
         
-//        vc.viewModel = CharactersViewModel(service: MainQueueDispatchDecorator(decoratee: CharacterServiceAPI(url: CharacterEndpoint.get(page: pages).url(baseURL: baseURL), client: httpClient)))
+        vc.viewModel = CharactersViewModel(service: MainQueueDispatchDecorator(decoratee: CharacterServiceAPI(url: CharacterEndpoint.get(page: pages).url(baseURL: baseURL), client: httpClient)))
         
         return vc
     }

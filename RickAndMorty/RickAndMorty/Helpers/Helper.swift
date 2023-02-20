@@ -24,8 +24,8 @@ final class MainQueueDispatchDecorator<T> {
 }
 
 extension MainQueueDispatchDecorator: EpisodeService where T == EpisodeService {
-    func load(completion: @escaping (EpisodeService.Result) -> Void) {
-        decoratee.load { [weak self] result in
+    func load(parameters: [String: Any]?, completion: @escaping (EpisodeService.Result) -> Void) {
+        decoratee.load(parameters: parameters) { [weak self] result in
             self?.dispatch { completion(result) }
         }
     }
@@ -33,8 +33,8 @@ extension MainQueueDispatchDecorator: EpisodeService where T == EpisodeService {
 
 
 extension MainQueueDispatchDecorator: LocationService where T == LocationService {
-    func load(completion: @escaping (LocationService.Result) -> Void) {
-        decoratee.load { [weak self] result in
+    func load(parameters: [String: Any]?, completion: @escaping (LocationService.Result) -> Void) {
+        decoratee.load(parameters: parameters) { [weak self] result in
             self?.dispatch { completion(result) }
         }
     }
@@ -42,8 +42,8 @@ extension MainQueueDispatchDecorator: LocationService where T == LocationService
 
 
 extension MainQueueDispatchDecorator: CharacterService where T == CharacterService {
-    func load(completion: @escaping (CharacterService.Result) -> Void) {
-        decoratee.load { [weak self] result in
+    func load(parameters: [String: Any]?, completion: @escaping (CharacterService.Result) -> Void) {
+        decoratee.load(parameters: parameters) { [weak self] result in
             self?.dispatch { completion(result) }
         }
     }

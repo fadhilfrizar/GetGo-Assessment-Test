@@ -10,7 +10,7 @@ import Foundation
 protocol EpisodeService {
     typealias Result = Swift.Result<[EpisodeResult], Error>
     
-    func load(completion: @escaping (Result) -> Void)
+    func load(parameters: [String: Any]?, completion: @escaping (Result) -> Void)
 }
 
 class EpisodeServiceAPI: EpisodeService {
@@ -28,8 +28,8 @@ class EpisodeServiceAPI: EpisodeService {
         self.client = client
     }
     
-    func load(completion: @escaping (EpisodeService.Result) -> Void) {
-        client.get(from: url) { [weak self] result in
+    func load(parameters: [String: Any]?, completion: @escaping (EpisodeService.Result) -> Void) {
+        client.get(from: url, parameters: parameters) { [weak self] result in
             guard self != nil else { return }
             switch result {
             case let .success((data, response)):

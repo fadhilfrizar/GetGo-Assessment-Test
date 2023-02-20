@@ -17,7 +17,7 @@ public protocol HTTPClient {
     /// The completion handler can be invoked in any thread.
     /// Clients are responsible to dispatch to appropriate threads, if needed.
     @discardableResult
-    func get(from url: URL, completion: @escaping (Result) -> Void) -> HTTPClientTask
+    func get(from url: URL, parameters: [String: Any]?, completion: @escaping (Result) -> Void) -> HTTPClientTask
 }
 
 class URLSessionHTTPClient : HTTPClient {
@@ -37,8 +37,18 @@ class URLSessionHTTPClient : HTTPClient {
         }
     }
     
-    func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
-        let task = session.dataTask(with: url) { data, response, error in
+    func get(from url: URL, parameters: [String: Any]?, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
+        
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        
+        if let params = parameters {
+            urlComponents?.queryItems = params.map { URLQueryItem(name: $0, value: "\($1)") }
+        }
+        
+        var request = URLRequest(url: (urlComponents?.url)!)
+        request.httpMethod = "GET"
+        
+        let task = session.dataTask(with: request) { data, response, error in
             completion(Result {
                 if let error = error {
                     throw error

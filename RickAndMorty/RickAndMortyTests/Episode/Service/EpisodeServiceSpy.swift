@@ -21,7 +21,7 @@ class EpisodeServiceSpy: EpisodeService {
         self.result = .failure(result)
     }
     
-    func load(completion: @escaping (Result<[EpisodeResult], Error>) -> Void) {
+    func load(parameters: [String : Any]?, completion: @escaping (Result<[EpisodeResult], Error>) -> Void) {
         loadEpisodeCount += 1
         completion(result)
     }

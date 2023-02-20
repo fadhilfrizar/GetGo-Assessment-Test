@@ -21,7 +21,7 @@ class HTTPClientSpy: HTTPClient {
         return messages.map { $0.url }
     }
     
-    func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
+    func get(from url: URL, parameters: [String : Any]?, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
         messages.append((url, completion))
         return Task()
     }

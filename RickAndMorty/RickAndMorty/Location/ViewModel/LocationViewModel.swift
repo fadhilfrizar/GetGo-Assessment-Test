@@ -20,9 +20,9 @@ class LocationViewModel {
     var onLocationError: Observer<Error>?
     var onLocationLoading: Observer<Bool>?
     
-    func fetchLocations(){
+    func fetchLocations(parameters: [String: Any]?){
         onLocationLoading?(true)
-        service.load { [weak self] result in
+        service.load(parameters: parameters) { [weak self] result in
             switch result {
             case let .success(location):
                 self?.onLocationLoad?(location)

@@ -20,9 +20,9 @@ class CharactersViewModel {
     var onCharactersError: Observer<Error>?
     var onCharactersLoading: Observer<Bool>?
     
-    func fetchCharacters(){
+    func fetchCharacters(parameters: [String: Any]?){
         onCharactersLoading?(true)
-        service.load { [weak self] result in
+        service.load(parameters: parameters) { [weak self] result in
             switch result {
             case let .success(character):
                 self?.onCharactersLoad?(character)

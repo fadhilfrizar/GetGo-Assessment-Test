@@ -11,24 +11,25 @@ import XCTest
 
 class LoadEpisodesFromRemoteUseCaseTest: XCTestCase {
     
+    let parameters = ["page": 1]
     func test_init_doesNotRequestDataFromURL() {
-        let (_, client) = makeSUT()
+        let (_, client) = makeSUT(parameters: parameters)
         
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
     func test_loadTwice_requestsDataFromURLTwice() {
         let url = URL(string: "https://a-given-url.com")!
-        let (sut, client) = makeSUT(url: url)
+        let (sut, client) = makeSUT(url: url, parameters: parameters)
 
-        sut.load { _ in }
-        sut.load { _ in }
+        sut.load(parameters: parameters) { _ in }
+        sut.load(parameters: parameters) { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
 
     func test_load_deliversConnectivityErrorOnClientError() {
-        let (sut, client) = makeSUT()
+        let (sut, client) = makeSUT(parameters: parameters)
 
         expect(sut, toCompleteWith: .failure(.connectivity), when: {
             let clientError = NSError(domain: "Test", code: 0)
@@ -37,7 +38,7 @@ class LoadEpisodesFromRemoteUseCaseTest: XCTestCase {
     }
     
     func test_load_deliversInvalidDataErrorOnNon200HTTPResponse() {
-        let (sut, client) = makeSUT()
+        let (sut, client) = makeSUT(parameters: parameters)
 
         let samples = [199, 201, 300, 400, 500]
 
@@ -50,7 +51,7 @@ class LoadEpisodesFromRemoteUseCaseTest: XCTestCase {
     }
 
     func test_load_deliversInvalidDataErrorOn200HTTPResponseWithInvalidJSON() {
-        let (sut, client) = makeSUT()
+        let (sut, client) = makeSUT(parameters: parameters)
 
         expect(sut, toCompleteWith: .failure(.invalidData), when: {
             let invalidJSON = Data("invalid json".utf8)
@@ -60,7 +61,7 @@ class LoadEpisodesFromRemoteUseCaseTest: XCTestCase {
 
     
     
-    private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: EpisodeService, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://a-url.com")!, parameters: [String: Any]?, file: StaticString = #filePath, line: UInt = #line) -> (sut: EpisodeService, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = EpisodeServiceAPI(url: url, client: client)
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -78,7 +79,7 @@ extension LoadEpisodesFromRemoteUseCaseTest {
     func expect(_ sut: EpisodeService, toCompleteWith expectedResult: Result<[EpisodeResult], EpisodeServiceAPI.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
 
-        sut.load { receivedResult in
+        sut.load(parameters: parameters) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedItems), .success(expectedItems)) :
                 XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)

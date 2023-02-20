@@ -21,7 +21,7 @@ class LocationServiceSpy: LocationService {
         self.result = .failure(result)
     }
     
-    func load(completion: @escaping (Result<[LocationResult], Error>) -> Void) {
+    func load(parameters: [String: Any]?, completion: @escaping (Result<[LocationResult], Error>) -> Void) {
         loadLocationCount += 1
         completion(result)
     }

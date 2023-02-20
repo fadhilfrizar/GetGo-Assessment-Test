@@ -10,7 +10,7 @@ import Foundation
 protocol CharacterService {
     typealias Result = Swift.Result<[CharacterResult], Error>
     
-    func load(completion: @escaping (Result) -> Void)
+    func load(parameters: [String: Any]?, completion: @escaping (Result) -> Void)
 }
 
 class CharacterServiceAPI: CharacterService {
@@ -28,8 +28,8 @@ class CharacterServiceAPI: CharacterService {
         self.client = client
     }
     
-    func load(completion: @escaping (CharacterService.Result) -> Void) {
-        client.get(from: url) { [weak self] result in
+    func load(parameters: [String: Any]?, completion: @escaping (CharacterService.Result) -> Void) {
+        client.get(from: url, parameters: parameters) { [weak self] result in
             guard self != nil else { return }
             switch result {
             case let .success((data, response)):

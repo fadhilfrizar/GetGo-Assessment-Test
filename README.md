@@ -1,5 +1,5 @@
 
-## Rick And Morty
+# Rick And Morty
 RickAndMorty is an iOS app that provides information about the characters, locations, and episodes of the popular TV show "Rick and Morty". The app uses Swift as its programming language and FittedSheet as its third-party library for presenting sheets.
 
 #### The app has the following features:
@@ -33,6 +33,6 @@ RickAndMorty is an iOS app that provides information about the characters, locat
 
 #### Acknowledgements
 
-- Rick and Morty API for providing the data used in the app
-- FittedSheet for providing the sheet presentation library used in the app  
+- [Rick And Morty API](https://rickandmortyapi.com/). for providing the data used in the app
+- [FittedSheet](https://github.com/gordontucker/FittedSheets). for providing the sheet presentation library used in the app  
   

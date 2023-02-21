@@ -20,7 +20,7 @@ RickAndMorty is an iOS app that provides information about the characters, locat
 
 #### Installation
 
-- Clone the repository: git clone https://github.com/YOUR-USERNAME/RickAndMorty.git
+- Clone the repository: git clone https://github.com/fadhilfrizar/GetGo-Assessment-Test.git
 - Open the project in Xcode: open RickAndMorty.xcodeproj
 - Build and run the app on a simulator or device
 

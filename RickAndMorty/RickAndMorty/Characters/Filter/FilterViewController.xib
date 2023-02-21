@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterViewController" customModule="RickAndMorty" customModuleProvider="target">
             <connections>
+                <outlet property="applyButton" destination="I8L-XR-CuL" id="TR2-5a-dxC"/>
                 <outlet property="collectionView" destination="YWs-S8-gB9" id="aU4-ZP-gbV"/>
                 <outlet property="filterLabel" destination="59G-6k-jCK" id="erp-xP-5b8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

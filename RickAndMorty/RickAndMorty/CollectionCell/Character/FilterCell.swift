@@ -41,7 +41,7 @@ class FilterCell: UICollectionViewCell {
         super.awakeFromNib()
         
         self.clipsToBounds = true
-        self.layer.cornerRadius = 16
+        self.layer.cornerRadius = self.layer.frame.height / 2
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.filterLabel.textColor = UIColor.lightGray

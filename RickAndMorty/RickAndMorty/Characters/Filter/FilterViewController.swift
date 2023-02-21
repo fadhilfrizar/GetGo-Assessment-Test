@@ -22,6 +22,12 @@ class FilterViewController: UIViewController {
             
         }
     }
+    @IBOutlet weak var applyButton: UIButton! {
+        didSet {
+            applyButton.clipsToBounds = true
+            applyButton.layer.cornerRadius = applyButton.frame.height / 2
+        }
+    }
     
     var status = ["Alive", "Dead", "Unknown"]
     var species = ["Alien", "Animal", "Mythological Creature", "Human"]

@@ -31,7 +31,6 @@ class CharactersViewModel {
         parameters["species"] = species
         parameters["gender"] = gender
         
-        print("parameters", parameters)
         service.load(parameters: parameters) { [weak self] result in
             switch result {
             case let .success(character):

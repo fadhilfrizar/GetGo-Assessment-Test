@@ -33,6 +33,6 @@ RickAndMorty is an iOS app that provides information about the characters, locat
 
 #### Acknowledgements
 
-- [Rick And Morty API](https://rickandmortyapi.com/). for providing the data used in the app
-- [FittedSheet](https://github.com/gordontucker/FittedSheets). for providing the sheet presentation library used in the app  
+- [Rick And Morty API](https://rickandmortyapi.com/) for providing the data used in the app
+- [FittedSheet](https://github.com/gordontucker/FittedSheets) for providing the sheet presentation library used in the app  
   

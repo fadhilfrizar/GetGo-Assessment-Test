@@ -100,6 +100,18 @@ class LocationListController: UICollectionViewController, UICollectionViewDelega
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailLocationController(nibName: "DetailLocationController", bundle: nil)
+
+        if searchActive {
+            vc.locations = filteredLocations[indexPath.row]
+        } else {
+            vc.locations = locations[indexPath.row]
+        }
+
+        self.present(vc, animated: true)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         let lastLocationCount: Int = self.locations.count - 1

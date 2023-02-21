@@ -91,11 +91,38 @@ class CharacterListControllerTests: XCTestCase {
         
     }
     
+    func test_viewDidLoad_searchCharacter() throws {
+        let sut = try makeSUT()
+        var filteredCharacter = sut.filteredCharacter
+        var characters = sut.characters
+        
+        if sut.searchActive {
+            sut.filteredCharacter = sut.characters.filter{ (characters) -> Bool in
+                return characters.name.range(of: sut.searchText, options: [ .caseInsensitive ]) != nil
+            }
+        }
+        
+        XCTAssertEqual(sut.filteredCharacter, filteredCharacter)
+        XCTAssertEqual(sut.characters, characters)
+        
+    }
+    
+    func test_viewDidLoad_searchIsNotActive() throws {
+        let sut = try makeSUT()
+        var searchText = sut.searchText
+        
+        if !sut.searchActive {
+            sut.searchText = ""
+        }
+        
+        XCTAssertEqual(sut.searchText, searchText)
+        
+    }
+    
     func makeSUT() throws -> CharactersListController {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let vc = CharactersListController(collectionViewLayout: layout)
         
-//        let sut = try XCTUnwrap(vc)
         return vc
     }
     

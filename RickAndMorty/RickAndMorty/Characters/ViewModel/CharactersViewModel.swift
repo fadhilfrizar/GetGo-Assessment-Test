@@ -20,8 +20,18 @@ class CharactersViewModel {
     var onCharactersError: Observer<Error>?
     var onCharactersLoading: Observer<Bool>?
     
-    func fetchCharacters(parameters: [String: Any]?){
+    var parameters: [String: Any] = [:]
+    
+    func fetchCharacters(pages: Int = 1, query: String = "", status: String = "", species: String = "", gender: String = ""){
         onCharactersLoading?(true)
+    
+        parameters["page"] = pages
+//        parameters["name"] = query
+        parameters["status"] = status
+        parameters["species"] = species
+        parameters["gender"] = gender
+        
+        print("parameters", parameters)
         service.load(parameters: parameters) { [weak self] result in
             switch result {
             case let .success(character):

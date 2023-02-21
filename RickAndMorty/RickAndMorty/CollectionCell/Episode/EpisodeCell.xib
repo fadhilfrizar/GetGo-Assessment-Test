@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whV-pG-S3H">
-                        <rect key="frame" x="191.33333333333331" y="59.333333333333343" width="136.33333333333331" height="40.666666666666657"/>
+                        <rect key="frame" x="182" y="59.333333333333343" width="155" height="40.666666666666657"/>
                         <string key="text">Air Date:
 9 December 2013</string>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -50,6 +50,7 @@
                 <constraint firstItem="Ez1-rS-Tx4" firstAttribute="top" secondItem="ApH-Ev-kXz" secondAttribute="bottom" constant="8" id="2JE-3P-wp8"/>
                 <constraint firstItem="Ez1-rS-Tx4" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="3VP-NJ-Gg8"/>
                 <constraint firstItem="ApH-Ev-kXz" firstAttribute="top" secondItem="HY2-hu-vQQ" secondAttribute="bottom" constant="16" id="AJC-5a-Acq"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="whV-pG-S3H" secondAttribute="trailing" constant="32" id="UUu-7G-FzO"/>
                 <constraint firstItem="whV-pG-S3H" firstAttribute="centerY" secondItem="ApH-Ev-kXz" secondAttribute="centerY" constant="16" id="Xee-hC-kP9"/>
                 <constraint firstItem="ApH-Ev-kXz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="Zwh-h0-pRO"/>
                 <constraint firstItem="whV-pG-S3H" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" constant="75" id="ba4-Qb-TLg"/>

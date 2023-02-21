@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import FittedSheets
 
 private let reuseIdentifier = "characterCell"
+
+protocol ReceivedFilterData {
+    func filterData(data: [String])
+    
+}
 
 class CharactersListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -22,6 +28,8 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
     var currentPage = 1
     var isLoading = false
     
+    var searchText: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "CharacterCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
@@ -29,6 +37,7 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         self.navigationItem.title = "Character"
+        
         
         viewModel?.onCharactersLoad = { [weak self] characters in
             
@@ -44,8 +53,7 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
         
         viewModel?.onCharactersError = { [weak self] error in
             self?.handle(error) {
-                let parameters = ["page": self!.currentPage]
-                self?.viewModel?.fetchCharacters(parameters: parameters)
+                self?.viewModel?.fetchCharacters()
             }
         }
         
@@ -60,26 +68,26 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
     }
     
     func fetchCharacter(page: Int) {
-        let parameters = ["page": page]
-        viewModel?.fetchCharacters(parameters: parameters)
+        viewModel?.fetchCharacters(pages: page)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.characters.removeAll()
-        self.filteredCharacter.removeAll()
-        
         fetchCharacter(page: currentPage)
     }
     
     @objc private func refresh(_ sender: Any) {
-        let parameters = ["page": currentPage]
-        viewModel?.fetchCharacters(parameters: parameters)
+        viewModel?.fetchCharacters()
     }
     
     
     @objc func filterCharacter(_ sender: UIButton) {
+        let vc = FilterViewController(nibName: "FilterViewController", bundle: nil)
+        vc.delegate = self
+        let sheetController = SheetViewController(
+            controller: vc,
+            sizes: [.percent(0.75), .fullscreen])
+        self.present(sheetController, animated: true)
     }
     
     // MARK: UICollectionViewDataSource
@@ -146,7 +154,9 @@ extension CharactersListController: UISearchResultsUpdating {
         
         if searchText == "" {
             searchActive = false
+            self.searchText = ""
         } else {
+            self.searchText = searchText
             filteredCharacter = characters.filter{ (characters) -> Bool in
                 return characters.name.range(of: searchText, options: [ .caseInsensitive ]) != nil
             }
@@ -156,4 +166,14 @@ extension CharactersListController: UISearchResultsUpdating {
         self.collectionView.reloadData()
     }
     
+}
+
+extension CharactersListController: ReceivedFilterData {
+    func filterData(data: [String]) {
+        
+        self.characters.removeAll()
+        self.filteredCharacter.removeAll()
+        
+        self.viewModel?.fetchCharacters(status: data[0], species: data[1], gender: data[2])
+    }
 }

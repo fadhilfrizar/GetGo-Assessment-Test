@@ -9,12 +9,49 @@ import UIKit
 
 class DetailCharacterController: UIViewController {
 
+    @IBOutlet weak var detailImageView: UIImageView! {
+        didSet {
+            detailImageView.clipsToBounds = true
+            detailImageView.layer.cornerRadius = 12
+        }
+    }
+    @IBOutlet weak var detailNameLabel: UILabel!
+    @IBOutlet weak var detailStatusLabel: UILabel!
+    @IBOutlet weak var detailGenderLabel: UILabel!
+    
+    @IBOutlet weak var detailSpeciesLabel: UILabel!
+    
+    @IBOutlet weak var detailCreatedLabel: UILabel!
+    @IBOutlet weak var detailOriginLabel: UILabel!
+    @IBOutlet weak var detailLocationLabel: UILabel!
+    @IBOutlet weak var detailEpisodeLabel: UILabel!
+    
     var characters: CharacterResult?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = characters?.name ?? ""
+        initView()
+    }
+    
+    private func initView() {
+        guard let data = characters else { return }
+        
+        self.navigationItem.title = data.name
+        
+        self.detailImageView.loadImageUsingCacheWithUrlString(data.image)
+        
+        self.detailNameLabel.text = data.name
+        self.detailStatusLabel.text = data.status
+        self.detailGenderLabel.text = data.gender
+        self.detailSpeciesLabel.text = data.species
+        
+        self.detailCreatedLabel.text = data.created
+        
+        self.detailOriginLabel.text = data.origin.name
+        self.detailLocationLabel.text = data.location.name
+        
+        self.detailEpisodeLabel.text = "\(data.episode.joined(separator: "\n"))"
     }
     
     override func viewWillAppear(_ animated: Bool) {

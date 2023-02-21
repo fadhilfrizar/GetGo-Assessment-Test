@@ -100,6 +100,18 @@ class EpisodeListController: UICollectionViewController, UICollectionViewDelegat
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailEpisodeController(nibName: "DetailEpisodeController", bundle: nil)
+
+        if searchActive {
+            vc.episodes = filteredEpisodes[indexPath.row]
+        } else {
+            vc.episodes = episodes[indexPath.row]
+        }
+
+        self.present(vc, animated: true)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         let lastEpisodeCount: Int = self.episodes.count - 1

@@ -30,6 +30,10 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
     
     var searchText: String = ""
     
+    var status: String = ""
+    var species: String = ""
+    var gender: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "CharacterCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
@@ -66,14 +70,12 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
         
     }
     
-    func fetchCharacter(page: Int) {
-        viewModel?.fetchCharacters(pages: page)
+    private func fetchCharacter(page: Int, status: String = "", species: String = "", gender: String = "") {
+        viewModel?.fetchCharacters(pages: page, status: status, species: species, gender: gender)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.characters.removeAll()
-//        self.filteredCharacter.removeAll()
         if self.characters.isEmpty {
             fetchCharacter(page: currentPage)
         }
@@ -145,7 +147,7 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
             guard !isLoading else { return }
             isLoading = true
             currentPage += 1
-            fetchCharacter(page: currentPage)
+            fetchCharacter(page: currentPage, status: self.status, species: self.species, gender: self.gender)
         }
     }
     
@@ -182,6 +184,10 @@ extension CharactersListController: ReceivedFilterData {
         
         self.characters.removeAll()
         self.filteredCharacter.removeAll()
+        
+        self.status = status
+        self.species = species
+        self.gender = gender
         
         self.viewModel?.fetchCharacters(status: status, species: species, gender: gender)
     }

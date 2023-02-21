@@ -42,11 +42,11 @@ class DetailCharacterController: UIViewController {
         self.detailImageView.loadImageUsingCacheWithUrlString(data.image)
         
         self.detailNameLabel.text = data.name
-        self.detailStatusLabel.text = data.status
-        self.detailGenderLabel.text = data.gender
-        self.detailSpeciesLabel.text = data.species
+        self.detailStatusLabel.text = "Status: \(data.status)"
+        self.detailGenderLabel.text = "Gender: \(data.gender)"
+        self.detailSpeciesLabel.text = "Species: \(data.species)"
         
-        self.detailCreatedLabel.text = data.created
+        self.detailCreatedLabel.text = data.created.convertStringToDateString()
         
         self.detailOriginLabel.text = data.origin.name
         self.detailLocationLabel.text = data.location.name

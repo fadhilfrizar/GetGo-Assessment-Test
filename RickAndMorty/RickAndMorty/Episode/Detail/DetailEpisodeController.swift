@@ -28,7 +28,7 @@ class DetailEpisodeController: UIViewController {
         
         self.navigationItem.title = data.name
         self.detailNameLabel.text = data.name
-        self.detailCreatedLabel.text = data.created
+        self.detailCreatedLabel.text = data.created.convertStringToDateString()
         self.detailTypeLabel.text = "Air Date: \(data.air_date)"
         self.detailDimensionLabel.text = data.episode
         self.detailResidentsLabel.text = "\(data.characters.joined(separator: "\n"))"

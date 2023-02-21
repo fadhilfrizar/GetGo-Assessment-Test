@@ -65,7 +65,8 @@ class MainTabBarController: UITabBarController {
         
         let vc = CharactersListController(collectionViewLayout: layout)
         vc.title = "Character"
-        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: vc, action: #selector(vc.filterCharacter))
+        let image = UIImage(systemName: "slider.horizontal.3", withConfiguration: UIImage.SymbolConfiguration(scale: .large))
+        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: vc, action: #selector(vc.filterCharacter))
         
         let searchController = UISearchController(searchResultsController: nil)
         vc.navigationItem.searchController = searchController

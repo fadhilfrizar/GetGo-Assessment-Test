@@ -15,6 +15,7 @@
 		85370BE329A4B07A0067CDB1 /* DetailLocationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85370BE129A4B07A0067CDB1 /* DetailLocationController.xib */; };
 		85370BE729A4B6A30067CDB1 /* DetailEpisodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85370BE529A4B6A30067CDB1 /* DetailEpisodeController.swift */; };
 		85370BE829A4B6A30067CDB1 /* DetailEpisodeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85370BE629A4B6A30067CDB1 /* DetailEpisodeController.xib */; };
+		85370BEA29A4BB8E0067CDB1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85370BE929A4BB8E0067CDB1 /* String.swift */; };
 		8582370B29A387B3003E8694 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582370929A387B3003E8694 /* FilterViewController.swift */; };
 		8582370C29A387B3003E8694 /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8582370A29A387B3003E8694 /* FilterViewController.xib */; };
 		8582370F29A38DEC003E8694 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8582370D29A38DEB003E8694 /* FilterCell.swift */; };
@@ -105,6 +106,7 @@
 		85370BE129A4B07A0067CDB1 /* DetailLocationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailLocationController.xib; sourceTree = "<group>"; };
 		85370BE529A4B6A30067CDB1 /* DetailEpisodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEpisodeController.swift; sourceTree = "<group>"; };
 		85370BE629A4B6A30067CDB1 /* DetailEpisodeController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailEpisodeController.xib; sourceTree = "<group>"; };
+		85370BE929A4BB8E0067CDB1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		8582370929A387B3003E8694 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		8582370A29A387B3003E8694 /* FilterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
 		8582370D29A38DEB003E8694 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				8591C335299E5828005C1B13 /* Helper.swift */,
 				8591C356299F7167005C1B13 /* UIViewController+Helper.swift */,
 				8591C358299F7180005C1B13 /* UIImageView+Helper.swift */,
+				85370BE929A4BB8E0067CDB1 /* String.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -898,6 +901,7 @@
 				8582370B29A387B3003E8694 /* FilterViewController.swift in Sources */,
 				8591C318299E3645005C1B13 /* LocationService.swift in Sources */,
 				8591C32C299E5460005C1B13 /* CharactersViewModel.swift in Sources */,
+				85370BEA29A4BB8E0067CDB1 /* String.swift in Sources */,
 				8591C33E299E7238005C1B13 /* LocationViewModel.swift in Sources */,
 				8591C340299E7242005C1B13 /* LocationItemViewModel.swift in Sources */,
 				8591C2D9299DECF1005C1B13 /* AppDelegate.swift in Sources */,

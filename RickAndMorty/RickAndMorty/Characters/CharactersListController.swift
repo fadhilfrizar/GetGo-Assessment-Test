@@ -11,7 +11,7 @@ import FittedSheets
 private let reuseIdentifier = "characterCell"
 
 protocol ReceivedFilterData {
-    func filterData(data: [String])
+    func filterData(status: String, species: String, gender: String)
     
 }
 
@@ -37,8 +37,7 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         self.navigationItem.title = "Character"
-        
-        
+                
         viewModel?.onCharactersLoad = { [weak self] characters in
             
             for character in characters {
@@ -73,7 +72,17 @@ class CharactersListController: UICollectionViewController, UICollectionViewDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchCharacter(page: currentPage)
+//        self.characters.removeAll()
+//        self.filteredCharacter.removeAll()
+        if self.characters.isEmpty {
+            fetchCharacter(page: currentPage)
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     @objc private func refresh(_ sender: Any) {
@@ -169,11 +178,11 @@ extension CharactersListController: UISearchResultsUpdating {
 }
 
 extension CharactersListController: ReceivedFilterData {
-    func filterData(data: [String]) {
+    func filterData(status: String, species: String, gender: String) {
         
         self.characters.removeAll()
         self.filteredCharacter.removeAll()
         
-        self.viewModel?.fetchCharacters(status: data[0], species: data[1], gender: data[2])
+        self.viewModel?.fetchCharacters(status: status, species: species, gender: gender)
     }
 }

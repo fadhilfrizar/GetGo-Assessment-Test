@@ -27,7 +27,7 @@ class DetailLocationController: UIViewController {
         
         self.navigationItem.title = data.name
         self.detailNameLabel.text = data.name
-        self.detailCreatedLabel.text = data.created
+        self.detailCreatedLabel.text = data.created.convertStringToDateString()
         self.detailTypeLabel.text = "Type: \(data.type)"
         self.detailDimensionLabel.text = data.dimension
         self.detailResidentsLabel.text = "\(data.residents.joined(separator: "\n"))"

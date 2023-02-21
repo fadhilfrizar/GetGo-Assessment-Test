@@ -23,13 +23,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eON-cu-XQc">
-                        <rect key="frame" x="194" y="23.333333333333332" width="150" height="33.666666666666671"/>
+                        <rect key="frame" x="194" y="24.333333333333336" width="150" height="31.333333333333336"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="Kat-UV-YWh"/>
                         </constraints>
                         <string key="text">Dimension: 
 Dimension D-99</string>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>

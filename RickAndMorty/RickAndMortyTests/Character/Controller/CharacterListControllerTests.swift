@@ -93,8 +93,8 @@ class CharacterListControllerTests: XCTestCase {
     
     func test_viewDidLoad_searchCharacter() throws {
         let sut = try makeSUT()
-        var filteredCharacter = sut.filteredCharacter
-        var characters = sut.characters
+        let filteredCharacter = sut.filteredCharacter
+        let characters = sut.characters
         
         if sut.searchActive {
             sut.filteredCharacter = sut.characters.filter{ (characters) -> Bool in
@@ -109,7 +109,7 @@ class CharacterListControllerTests: XCTestCase {
     
     func test_viewDidLoad_searchIsNotActive() throws {
         let sut = try makeSUT()
-        var searchText = sut.searchText
+        let searchText = sut.searchText
         
         if !sut.searchActive {
             sut.searchText = ""

@@ -10,30 +10,30 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="characterCell" id="gTV-IL-0wX" customClass="CharacterCell" customModule="RickAndMorty" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="260"/>
+            <rect key="frame" x="0.0" y="0.0" width="150" height="250"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="200" height="260"/>
+                <rect key="frame" x="0.0" y="0.0" width="150" height="250"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FAb-cR-Xrd">
-                        <rect key="frame" x="0.0" y="0.0" width="200" height="186"/>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkM-tI-NdB">
-                        <rect key="frame" x="16" y="232" width="168" height="20"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FAb-cR-Xrd">
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="ZFA-07-wp6"/>
+                            <constraint firstAttribute="height" constant="150" id="iOf-Ok-r8x"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mythological Creature" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkM-tI-NdB">
+                        <rect key="frame" x="16" y="202" width="118" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="9vY-7G-GTl"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="336-fK-fcM">
-                        <rect key="frame" x="16" y="194" width="168" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="eiH-tY-2S9"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="336-fK-fcM">
+                        <rect key="frame" x="16" y="158" width="118" height="44"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -46,7 +46,7 @@
                 <constraint firstAttribute="bottom" secondItem="jkM-tI-NdB" secondAttribute="bottom" constant="8" id="Isn-Am-ORn"/>
                 <constraint firstItem="jkM-tI-NdB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="PpC-g9-tHj"/>
                 <constraint firstItem="336-fK-fcM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="cji-NJ-Z73"/>
-                <constraint firstItem="jkM-tI-NdB" firstAttribute="top" secondItem="336-fK-fcM" secondAttribute="bottom" constant="8" id="fEL-vt-SEz"/>
+                <constraint firstItem="jkM-tI-NdB" firstAttribute="top" secondItem="336-fK-fcM" secondAttribute="bottom" id="fEL-vt-SEz"/>
                 <constraint firstAttribute="trailing" secondItem="336-fK-fcM" secondAttribute="trailing" constant="16" id="igI-UA-n4z"/>
                 <constraint firstItem="FAb-cR-Xrd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kpn-Qj-R7L"/>
                 <constraint firstItem="FAb-cR-Xrd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="n7p-ea-5pq"/>

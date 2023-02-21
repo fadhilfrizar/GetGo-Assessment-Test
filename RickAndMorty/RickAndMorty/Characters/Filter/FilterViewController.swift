@@ -32,7 +32,9 @@ class FilterViewController: UIViewController {
     var selectedGender: String = ""
     
     var delegate: ReceivedFilterData?
-
+    
+    var selectedIndexPaths = [Int: IndexPath]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,17 +44,8 @@ class FilterViewController: UIViewController {
         sender.clipsToBounds = true
         sender.layer.cornerRadius = 12
         
-        print("Select Status = ", selectedStatus)
-        print("Select Species = ", selectedSpecies)
-        print("Select Gender = ", selectedGender)
-        
         self.dismiss(animated: true) {
-            var arrayData: [String] = []
-            arrayData.append(self.selectedStatus)
-            arrayData.append(self.selectedSpecies)
-            arrayData.append(self.selectedGender)
-            
-            self.delegate?.filterData(data: arrayData)
+            self.delegate?.filterData(status: self.selectedStatus, species: self.selectedSpecies, gender: self.selectedGender)
         }
     }
     
@@ -125,14 +118,17 @@ extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         switch indexPath.section {
         case 0:
             self.selectedStatus = self.status[indexPath.row]
+            allowOneSectionCollectionView(collectionView, indexPath: indexPath)
         case 1:
             self.selectedSpecies = self.species[indexPath.row]
+            allowOneSectionCollectionView(collectionView, indexPath: indexPath)
         case 2:
             self.selectedGender = self.gender[indexPath.row]
+            allowOneSectionCollectionView(collectionView, indexPath: indexPath)
         default:
             break
         }
@@ -164,6 +160,22 @@ extension FilterViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     
+}
+
+extension FilterViewController {
+    
+    func allowOneSectionCollectionView(_ collectionView: UICollectionView, indexPath: IndexPath) {
+        let section = indexPath.section
+        
+        if let currentSelectedIndexPath = selectedIndexPaths[section] {
+            // Deselect the current selected item in the section
+            collectionView.deselectItem(at: currentSelectedIndexPath, animated: false)
+        }
+        
+        // Select the new item and update the selected index path for the section
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+        selectedIndexPaths[section] = indexPath
+    }
 }
 
 extension String {
